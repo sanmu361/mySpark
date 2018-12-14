@@ -29,7 +29,12 @@ object HdfsJob {
 
     val textFileRdd = sc.textFile("/sanmu/mapreduce/input/a.txt").map(_.split(" ")).map(p => Row(p(0),p(1).toInt))
 
-    var dataFrame = sparkSession.createDataFrame(textFileRdd,schema)
+    textFileRdd.cache()
+    textFileRdd.persist()
+    textFileRdd.checkpoint()
+    textFileRdd.groupBy(String => Integer);
+    textFileRdd.first();
+    var dataFrame = sparkSession.createDataFrame(textFileRdd,schema).as[Person]
 
     dataFrame.write.mode("overwrite").saveAsTable("table1")
 
