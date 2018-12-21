@@ -32,9 +32,9 @@ object HdfsJob {
     textFileRdd.cache()
     textFileRdd.persist()
     textFileRdd.checkpoint()
-    textFileRdd.groupBy(String => Integer);
+    //textFileRdd.groupBy(String => Integer);
     textFileRdd.first();
-    var dataFrame = sparkSession.createDataFrame(textFileRdd,schema).as[Person]
+    var dataFrame = sparkSession.createDataFrame(textFileRdd,schema)
 
     dataFrame.write.mode("overwrite").saveAsTable("table1")
 
